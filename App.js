@@ -1,21 +1,23 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {StatusBar} from 'expo-status-bar';
+import React, {useState} from 'react';
+import {RootNav} from "./navigation";
+import {AppLoading} from "expo";
+import {loadFonts} from "./style/fonts";
+import store from "./store";
+import {Provider} from "react-redux";
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    const [loaded, setLoaded] = useState(false);
+    if (!loaded) {
+        return (
+            <AppLoading startAsync={loadFonts} onFinish={() => setLoaded(true)}/>
+        );
+    }
+    return (
+        <Provider store={store}>
+            <StatusBar backgroundColor={"#505052"}/>
+            <RootNav/>
+        </Provider>
+    );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
